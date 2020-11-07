@@ -23,13 +23,13 @@ export class ReservationGuestComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup( {
       $key: new FormControl(null),
-      name: new FormControl('', Validators.required),
-      phone: new FormControl('', Validators.required),
-      creditCard: new FormControl('', Validators.required),
-      photoID: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.email),
-      inDate: new FormControl('', Validators.required),
-      outDate: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required]),
+      phone: new FormControl('', [Validators.required]),
+      creditCard: new FormControl('', [Validators.required]),
+      photoID: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.email]),
+      inDate: new FormControl('', [Validators.required]),
+      outDate: new FormControl('', [Validators.required]),
     });
     this.record = {};
   }

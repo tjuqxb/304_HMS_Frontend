@@ -16,7 +16,7 @@ export class GuestComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup( {
       $key: new FormControl(null),
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required]),
       phone: new FormControl('')
     });
     this.record = {};
