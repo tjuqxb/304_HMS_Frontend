@@ -42,30 +42,30 @@ export class ReservationGuestComponent implements OnInit {
       this.record.photo_identity = this.form.get('photoID').value;
       this.record.email = this.form.get('email').value;
       this.record.membership = null;
-    }
-    let date = {inDate: {}, outDate: {}};
-    date.inDate = this.formatDate(this.form.get('inDate').value);
-    date.outDate = this.formatDate(this.form.get('outDate').value);
-    let recordData = [];
-    this.guests.forEach(ele => {
-      //console.log(ele.exist);
-      if(ele.exist) {
-        const singleData = ele.submitRecord();
-        if (singleData) {
-          recordData.push(singleData);
+      let date = {inDate: {}, outDate: {}};
+      date.inDate = this.formatDate(this.form.get('inDate').value);
+      date.outDate = this.formatDate(this.form.get('outDate').value);
+      let recordData = [];
+      this.guests.forEach(ele => {
+        //console.log(ele.exist);
+        if(ele.exist) {
+          const singleData = ele.submitRecord();
+          if (singleData) {
+            recordData.push(singleData);
+          }
         }
-      }
-    });
-    let ret = {reservationGuest: {}, inHouseGuests: [], date: {}};
-    ret.reservationGuest = this.record;
-    ret.inHouseGuests = recordData;
-    ret.date = date;
-    console.log(ret);
-    this.http.post('http://localhost:8080/guest/reservation_guest', ret).toPromise().then((data) => {
-      console.log(data);
-    }).catch((err) => {
+      });
+      let ret = {reservationGuest: {}, inHouseGuests: [], date: {}};
+      ret.reservationGuest = this.record;
+      ret.inHouseGuests = recordData;
+      ret.date = date;
+      console.log(ret);
+      this.http.post('http://localhost:8080/guest/reservation_guest', ret).toPromise().then((data) => {
+        console.log(data);
+      }).catch((err) => {
 
-    });
+      });
+    }
   }
 
   addGuest(): any {
