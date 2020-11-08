@@ -1,8 +1,11 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GuestComponent} from '../guest/guest.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {CommonTableAService} from '../common-table-a.service';
+import {TableComponent} from '../table/table.component';
+import {DeleteTableComponent} from '../delete-table/delete-table.component';
 
 @Component({
   selector: 'app-reservation-guest',
@@ -13,12 +16,20 @@ export class ReservationGuestComponent implements OnInit {
   @ViewChildren(GuestComponent)
   private guests: QueryList<GuestComponent>;
 
+  @ViewChild(TableComponent)
+  public roomTable: TableComponent;
+
+  @ViewChild(DeleteTableComponent)
+  public reservationRecordTable: DeleteTableComponent;
+
   public form: FormGroup;
   public record: any;
   public minDate: Date = new Date();
   public listAdd = [];
+  public reqBody: any;
+  public displayReserveButton = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public service: CommonTableAService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup( {
@@ -32,6 +43,7 @@ export class ReservationGuestComponent implements OnInit {
       outDate: new FormControl('', [Validators.required]),
     });
     this.record = {};
+    this.reqBody = {};
   }
 
   submitRecord(): any {
@@ -59,20 +71,54 @@ export class ReservationGuestComponent implements OnInit {
       ret.reservationGuest = this.record;
       ret.inHouseGuests = recordData;
       ret.date = date;
+      this.reqBody = ret;
       console.log(ret);
-      this.http.post('http://localhost:8080/guest/reservation_guest', ret).toPromise().then((data) => {
-        console.log(data);
+      this.http.post('http://localhost:8080/guest/query_rooms', ret).toPromise().then((data: any) => {
+        // this.service.tData = data;
+        this.roomTable.setData(data);
+        this.displayRooms(true);
       }).catch((err) => {
 
       });
     }
+
   }
 
   addGuest(): any {
       this.listAdd.push(1);
   }
 
-  formatDate(date: any):String {
+  displayRooms(bool): void {
+    this.reservationRecordTable.setExist(!bool);
+    this.roomTable.setExist(bool);
+    this.displayReserveButton = bool;
+  }
+
+  reserveRoom(): any {
+    this.reqBody.rm_number = this.roomTable.data[this.roomTable.chosen].room_number;
+    this.http.post('http://localhost:8080/guest/reserve_room', this.reqBody).toPromise().then((data: any) => {
+      // this.service.tData = data;
+      this.displayRooms(false);
+      this.reservationRecordTable.setData(data);
+    }).catch((err) => {
+
+    });
+  }
+
+  displayReserveRecords(): void {
+    this.record.credit_card = this.form.get('creditCard').value;
+    this.record.photo_identity = this.form.get('photoID').value;
+    this.http.get(`http://localhost:8080/guest/reservations/${this.record.photo_identity}/${this.record.credit_card}`, this.record).toPromise().then((data: any) => {
+      // this.service.tData = data;
+      this.displayRooms(false);
+      this.reservationRecordTable.setData(data);
+    }).catch((err) => {
+
+    });
+
+  }
+
+  formatDate(date: any):string {
       let d = new Date(date);
       let month = '' + (d.getMonth() + 1);
       console.log(d.getMonth());

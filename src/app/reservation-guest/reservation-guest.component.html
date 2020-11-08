@@ -55,12 +55,16 @@
   <app-guest fxLayout="row wrap" fxFlexAlign="end" *ngFor="let item of listAdd"></app-guest>
 
 
-
-
-
   <div fxFlexAlign="end">
+    <button mat-stroked-button  type="submit" (click)="displayReserveRecords()" style="margin-right: 20px">Display Reserve Record</button>
     <button mat-stroked-button  type="submit" (click)="addGuest()" style="margin-right: 20px">Add Guest</button>
-    <button mat-stroked-button  type="submit" (click)="submitRecord()" style="margin-right: 20px">Submit</button>
+    <button mat-stroked-button  type="submit" (click)="submitRecord()" style="margin-right: 20px">Show Available Rooms</button>
   </div>
 
+  <app-table></app-table>
+  <app-delete-table></app-delete-table>
+
+  <div fxFlexAlign="end" *ngIf="displayReserveButton">
+  <button mat-stroked-button  type="submit" (click)="reserveRoom()" style="margin-right: 20px">Reserve</button>
+  </div>
 </div>

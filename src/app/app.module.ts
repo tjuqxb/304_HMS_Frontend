@@ -7,19 +7,27 @@ import { AppComponent } from './app.component';
 import { GuestComponent } from './guest/guest.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReservationGuestComponent } from './reservation-guest/reservation-guest.component';
+import { TableComponent } from './table/table.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DeleteTableComponent } from './delete-table/delete-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GuestComponent,
-    ReservationGuestComponent
+    ReservationGuestComponent,
+    TableComponent,
+    DeleteTableComponent
   ],
   imports: [
     BrowserModule,
     MaterialModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
