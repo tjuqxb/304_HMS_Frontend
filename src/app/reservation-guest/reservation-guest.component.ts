@@ -48,6 +48,7 @@ export class ReservationGuestComponent implements OnInit {
 
   submitRecord(): any {
     if (this.form.valid) {
+      this.roomTable.chosen = -1;
       this.record.name = this.form.get('name').value;
       this.record.phone = this.form.get('phone').value;
       this.record.credit_card = this.form.get('creditCard').value;
@@ -75,6 +76,7 @@ export class ReservationGuestComponent implements OnInit {
       console.log(ret);
       this.http.post('http://localhost:8080/guest/query_rooms', ret).toPromise().then((data: any) => {
         // this.service.tData = data;
+        console.log(data);
         this.roomTable.setData(data);
         this.displayRooms(true);
       }).catch((err) => {

@@ -11,6 +11,9 @@ import { TableComponent } from './table/table.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DeleteTableComponent } from './delete-table/delete-table.component';
+import { WindowComponent } from './window/window.component';
+import { AppRoutingModule } from './app-routing.module';
+import { DisplayReservationsComponent } from './display-reservations/display-reservations.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { DeleteTableComponent } from './delete-table/delete-table.component';
     GuestComponent,
     ReservationGuestComponent,
     TableComponent,
-    DeleteTableComponent
+    DeleteTableComponent,
+    WindowComponent,
+    DisplayReservationsComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,8 @@ import { DeleteTableComponent } from './delete-table/delete-table.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
