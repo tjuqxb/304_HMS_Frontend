@@ -1,6 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, Validators} from '@angular/forms';
+import {NormalTableComponent} from '../normal-table/normal-table.component';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-dialog-a',
@@ -8,15 +10,28 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./dialog-a.component.css']
 })
 export class DialogAComponent implements OnInit {
+  @ViewChild(NormalTableComponent)
+  public priceTable: NormalTableComponent;
+
   receptionistVal = new FormControl('', [
     Validators.required,
   ]);
   public checkOption;
   public options = [ 'check in', 'check out', 'delete check-out record', 'clear all check in/out records'];
-  constructor(@Inject(MAT_DIALOG_DATA) public data, public dialogRef: MatDialogRef<DialogAComponent>) { }
+  public enabled = [];
+  public billEnabled = false;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data, public dialogRef: MatDialogRef<DialogAComponent>, private http: HttpClient) { }
 
   ngOnInit(): void {
     console.log(this.data);
+    this.enabled.push(!(this.data.item.checkIn));
+    this.enabled.push(this.data.item.checkIn && !this.data.item.checkIn.out_index &&
+      (this.data.item.index + this.data.innerIndex >= this.data.item.checkIn.in_index));
+    this.enabled.push(this.data.item.checkIn && this.data.item.checkIn.out_index);
+    this.enabled.push(this.data.item.checkIn);
+    this.billEnabled = this.data.item.checkIn && this.data.item.checkIn.in_index && this.data.item.checkIn.out_index;
+    console.log(this.enabled);
   }
 
   submit(): void {
@@ -32,9 +47,19 @@ export class DialogAComponent implements OnInit {
     data:{
       guest_id: this.data.item.reservation_guest.guest_id,
       rm_number: this.data.rm_number,
+      ck_id: this.data.item.checkIn ? this.data.item.checkIn.ck_id : null,
       date,
       receptionist: this.data.receptionists[this.receptionistVal.value].sid,
     }});
+  }
+
+  getBill(): void {
+      this.http.get(`http://localhost:8080/rooms/room-records-in-checkout/${this.data.item.checkIn.ck_id}`).toPromise().then(data => {
+        this.priceTable.setData(data);
+        this.priceTable.setExist(true);
+      }).catch(err => {
+
+      });
   }
 
 }

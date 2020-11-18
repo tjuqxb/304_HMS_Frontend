@@ -60,6 +60,9 @@
     <button mat-stroked-button  type="submit" (click)="submitRecord()" style="margin-right: 20px">Show Available Rooms</button>
     <button mat-stroked-button  type="submit" (click)="addGuest()" style="margin-right: 20px">Add Guest</button>
   </div>
+  <div fxFlexAlign="end">
+    <mat-checkbox [(ngModel)]="getMin" style="margin-right: 20px"> Display the cheapest available room</mat-checkbox>
+  </div>
 
   <app-table></app-table>
   <app-delete-table></app-delete-table>

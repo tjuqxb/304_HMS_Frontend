@@ -37,8 +37,15 @@
     </div>
     <div *ngSwitchCase="true" (mouseleave)="setDisplayDetails(false)" fxLayout="row" fxLayoutAlign="space-around center">
       <div *ngFor="let k of item.innerArr; index as i"  style="margin: 0px; font-size: smaller; border-color: white; border-width: thin;
-border-style: solid; flex: 1 1 auto; height: 70px" fxLayoutAlign="center center" >
-        <div (click)="openDialogA(item, i, roomIndex)">MOD</div>
+border-style: solid; flex: 1 1 auto; height: 70px" fxLayoutAlign="center center" fxFlex="{{100/item.innerArr.length}}">
+        <div (click)="openDialogA(item, i, roomIndex)">MOD
+          <div *ngIf="item.checkIn && item.checkIn.in_index === item.index + i">
+            ck_in
+          </div>
+          <div *ngIf="item.checkIn && item.checkIn.out_index === item.index + i">
+            ck_out
+          </div>
+        </div>
 <!--        <mat-radio-group aria-label="Select an option" class="smallRadio" fxLayout="column wrap">-->
 <!--          <mat-radio-button value="1">ck in</mat-radio-button>-->
 <!--          <mat-radio-button value="2">ck out</mat-radio-button>-->
@@ -46,6 +53,7 @@ border-style: solid; flex: 1 1 auto; height: 70px" fxLayoutAlign="center center"
 <!--          <mat-radio-button value="4">cancel </mat-radio-button>-->
 <!--        </mat-radio-group>-->
       </div>
+
     </div>
 
   </div>

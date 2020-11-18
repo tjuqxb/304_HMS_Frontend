@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {GuestComponent} from '../guest/guest.component';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {CommonTableAService} from '../common-table-a.service';
 import {TableComponent} from '../table/table.component';
 import {DeleteTableComponent} from '../delete-table/delete-table.component';
 
@@ -28,8 +27,9 @@ export class ReservationGuestComponent implements OnInit {
   public listAdd = [];
   public reqBody: any;
   public displayReserveButton = false;
+  public getMin = false;
 
-  constructor(private http: HttpClient, public service: CommonTableAService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.form = new FormGroup( {
@@ -74,16 +74,26 @@ export class ReservationGuestComponent implements OnInit {
       ret.date = date;
       this.reqBody = ret;
       console.log(ret);
-      this.http.post('http://localhost:8080/guest/query_rooms', ret).toPromise().then((data: any) => {
-        // this.service.tData = data;
-        console.log(data);
-        this.roomTable.setData(data);
-        this.displayRooms(true);
-      }).catch((err) => {
+      if (this.getMin) {
+        this.http.post('http://localhost:8080/guest/query_cheap_rooms', ret).toPromise().then((data: any) => {
+          // this.service.tData = data;
+          console.log(data);
+          this.roomTable.setData(data);
+          this.displayRooms(true);
+        }).catch(err => {
 
-      });
+        })
+      } else {
+        this.http.post('http://localhost:8080/guest/query_rooms', ret).toPromise().then((data: any) => {
+          // this.service.tData = data;
+          console.log(data);
+          this.roomTable.setData(data);
+          this.displayRooms(true);
+        }).catch((err) => {
+
+        });
+      }
     }
-
   }
 
   addGuest(): any {

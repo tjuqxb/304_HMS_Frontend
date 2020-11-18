@@ -21,6 +21,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { DialogAComponent } from './dialog-a/dialog-a.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
+import { NormalTableComponent } from './normal-table/normal-table.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {FormsModule} from '@angular/forms';
     DisplayReservationsComponent,
     Window2Component,
     RoomGridComponent,
-    DialogAComponent
+    DialogAComponent,
+    NormalTableComponent
   ],
   imports: [
     BrowserModule,

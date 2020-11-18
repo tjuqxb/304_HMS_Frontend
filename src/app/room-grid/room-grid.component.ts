@@ -33,12 +33,59 @@ export class RoomGridComponent implements OnInit {
 
   openDialogA(item, i, roomIndex) {
     const dialogRef = this.dialog.open(DialogAComponent, {
-      width:'250px', data: {item, innerIndex: i, year: this.year, month: this.month + 1, receptionists: this.receptionsts,
+       data: {item, innerIndex: i, year: this.year, month: this.month + 1, receptionists: this.receptionsts,
         rm_number: this.rooms[roomIndex - 1].rm_number}
     });
     dialogRef.afterClosed().toPromise().then((data)=> {
       console.log(data);
+      if (data.purpose === 'check in') {
+        let trans = data.data;
+        trans.in_date = trans.date;
+        trans.ck_in = trans.receptionist;
+        this.checkIn(trans);
+      }
+      if (data.purpose === 'check out') {
+        this.checkOut(data.data);
+      }
+      if (data.purpose === 'delete check-out record') {
+        this.deleteCheckOut(data.data);
+      }
+      if (data.purpose === 'clear all check in/out records') {
+        this.clearCheckInOut(data.data.ck_id);
+      }
     }).catch((err) => {
+
+    })
+  }
+
+  clearCheckInOut(id) {
+    this.http.delete(`http://localhost:8080/checked-in-out-records/del-check-in-and-out/${id}`).toPromise().then( data => {
+      this.getReservations();
+    }).catch(err => {
+
+    })
+  }
+
+  deleteCheckOut(obj): void {
+    this.http.post('http://localhost:8080/checked-in-out-records/del-check-out', obj).toPromise().then( data => {
+      this.getReservations();
+    }).catch(err => {
+
+    })
+  }
+
+  checkIn(obj): void {
+    this.http.post('http://localhost:8080/checked-in-out-records/check-in', obj).toPromise().then( data => {
+      this.getReservations();
+    }).catch(err => {
+
+    })
+  }
+
+  checkOut(obj): void {
+    this.http.post('http://localhost:8080/checked-in-out-records/check-out', obj).toPromise().then( data => {
+      this.getReservations();
+    }).catch(err => {
 
     })
   }
@@ -46,6 +93,7 @@ export class RoomGridComponent implements OnInit {
   getReceptionists(): void {
     this.http.get('http://localhost:8080/hotel_staff/receptionists/list').toPromise().then((data: any) => {
       this.receptionsts = data;
+      console.log(data);
     }).catch(err => {
 
     });
@@ -80,6 +128,7 @@ export class RoomGridComponent implements OnInit {
   getCheckIns(): any {
     return this.http.get(`http://localhost:8080/checked-in-out-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
       this.checkInRecords = data;
+      console.log(data);
       return Promise.resolve('success');
     });
   }
@@ -194,17 +243,6 @@ export class RoomGridComponent implements OnInit {
     }
     console.log(ret);
     return ret;
-  }
-
-  addCheckInsToRoomRecords():void {
-    for (let i = 0; i < this.roomRecordsDisplay.length; i++) {
-      let singleRecords = this.roomRecordsDisplay[i];
-      let checkIns = this.checkInRecords[i];
-      for (let item of checkIns) {
-        let findIndex = item.index;
-
-      }
-    }
   }
 
   private pushTrivialRoomRecord(segmentLen: number, insert: any, endPtr, arr: any[]) {
