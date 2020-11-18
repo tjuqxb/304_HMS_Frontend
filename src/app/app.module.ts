@@ -14,6 +14,13 @@ import { DeleteTableComponent } from './delete-table/delete-table.component';
 import { WindowComponent } from './window/window.component';
 import { AppRoutingModule } from './app-routing.module';
 import { DisplayReservationsComponent } from './display-reservations/display-reservations.component';
+import { Window2Component } from './window2/window2.component';
+import { RoomGridComponent } from './room-grid/room-grid.component';
+import {MatRippleModule} from '@angular/material/core';
+import {MatRadioModule} from '@angular/material/radio';
+import { DialogAComponent } from './dialog-a/dialog-a.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +30,10 @@ import { DisplayReservationsComponent } from './display-reservations/display-res
     TableComponent,
     DeleteTableComponent,
     WindowComponent,
-    DisplayReservationsComponent
+    DisplayReservationsComponent,
+    Window2Component,
+    RoomGridComponent,
+    DialogAComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +43,11 @@ import { DisplayReservationsComponent } from './display-reservations/display-res
     HttpClientModule,
     MatTableModule,
     MatCheckboxModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatRippleModule,
+    MatRadioModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
