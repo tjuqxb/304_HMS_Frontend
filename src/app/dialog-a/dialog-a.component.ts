@@ -13,6 +13,8 @@ export class DialogAComponent implements OnInit {
   @ViewChild(NormalTableComponent)
   public priceTable: NormalTableComponent;
 
+  public sumExist = false;
+
   receptionistVal = new FormControl('', [
     Validators.required,
   ]);
@@ -20,6 +22,7 @@ export class DialogAComponent implements OnInit {
   public options = [ 'check in', 'check out', 'delete check-out record', 'clear all check in/out records'];
   public enabled = [];
   public billEnabled = false;
+  public totalPrice;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data, public dialogRef: MatDialogRef<DialogAComponent>, private http: HttpClient) { }
 
@@ -56,10 +59,20 @@ export class DialogAComponent implements OnInit {
   getBill(): void {
       this.http.get(`http://localhost:8080/rooms/room-records-in-checkout/${this.data.item.checkIn.ck_id}`).toPromise().then(data => {
         this.priceTable.setData(data);
+        this.totalPrice = this.getTotalPrice(data);
+        this.sumExist = true;
         this.priceTable.setExist(true);
       }).catch(err => {
 
       });
+  }
+
+  getTotalPrice(data): number {
+    let sum = 0;
+    for (let item of data) {
+      sum += item.price;
+    }
+    return sum;
   }
 
 }

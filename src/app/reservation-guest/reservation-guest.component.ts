@@ -130,7 +130,7 @@ export class ReservationGuestComponent implements OnInit {
 
   }
 
-  formatDate(date: any):string {
+  public formatDate(date: any):string {
       let d = new Date(date);
       let month = '' + (d.getMonth() + 1);
       console.log(d.getMonth());

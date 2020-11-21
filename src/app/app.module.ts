@@ -22,6 +22,10 @@ import { DialogAComponent } from './dialog-a/dialog-a.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule} from '@angular/forms';
 import { NormalTableComponent } from './normal-table/normal-table.component';
+import { StaffTableComponent } from './staff-table/staff-table.component';
+import { SideBarComponent } from './side-bar/side-bar.component';
+import { RoomTableComponent } from './room-table/room-table.component';
+import { ProjectionTableComponent } from './projection-table/projection-table.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,11 @@ import { NormalTableComponent } from './normal-table/normal-table.component';
     Window2Component,
     RoomGridComponent,
     DialogAComponent,
-    NormalTableComponent
+    NormalTableComponent,
+    StaffTableComponent,
+    SideBarComponent,
+    RoomTableComponent,
+    ProjectionTableComponent
   ],
   imports: [
     BrowserModule,

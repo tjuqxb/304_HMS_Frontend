@@ -21,7 +21,10 @@
       <p>operation date:{{data.year}}-{{data.month}}-{{data.item.index + 1 + data.innerIndex}}</p>
       <p>check in/out operation:</p>
   </div>
+    <div>
     <app-normal-table style="margin-right: 20px"></app-normal-table>
+    <p style="margin-right: 200px" *ngIf="sumExist">total price:{{totalPrice}} </p>
+    </div>
   </div>
       <mat-radio-group aria-label="Select an option" style="margin-top: 20px" [(ngModel)]="checkOption">
         <mat-radio-button *ngFor = "let item of options; index as i"  value = "{{i}}" style="margin-right: 20px" disabled = "{{!enabled[i]}}"
