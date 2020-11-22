@@ -33,8 +33,9 @@ export class DialogAComponent implements OnInit {
       (this.data.item.index + this.data.innerIndex >= this.data.item.checkIn.in_index));
     this.enabled.push(this.data.item.checkIn && this.data.item.checkIn.out_index);
     this.enabled.push(this.data.item.checkIn);
-    this.billEnabled = this.data.item.checkIn && this.data.item.checkIn.in_index && this.data.item.checkIn.out_index;
-    console.log(this.enabled);
+    this.billEnabled = this.data.item.checkIn && Object.keys(this.data.item.checkIn).includes('in_index')
+      && Object.keys(this.data.item.checkIn).includes('out_index');
+    // console.log(this.enabled);
   }
 
   submit(): void {

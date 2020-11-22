@@ -37,7 +37,7 @@ export class RoomGridComponent implements OnInit {
         rm_number: this.rooms[roomIndex - 1].rm_number}
     });
     dialogRef.afterClosed().toPromise().then((data)=> {
-      console.log(data);
+      // console.log(data);
       if (data.purpose === 'check in') {
         let trans = data.data;
         trans.in_date = trans.date;
@@ -93,7 +93,7 @@ export class RoomGridComponent implements OnInit {
   getReceptionists(): void {
     this.http.get('http://localhost:8080/hotel_staff/receptionists/list').toPromise().then((data: any) => {
       this.receptionsts = data;
-      console.log(data);
+      // console.log(data);
     }).catch(err => {
 
     });
@@ -110,16 +110,16 @@ export class RoomGridComponent implements OnInit {
 
   getReservations(): void {
     this.http.get(`http://localhost:8080/rooms/room-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
-      console.log(this.year);
-      console.log(this.month + 1);
+      // console.log(this.year);
+      // console.log(this.month + 1);
       this.roomRecords = data;
-      console.log(data);
+      // console.log(data);
       return Promise.resolve('success');
     }).then((data) => {
       return this.getCheckIns();
     }).then((data) => {
       this.roomRecordsDisplay = this.processRoomRecords(this.roomRecords, this.checkInRecords);
-      console.log(this.roomRecordsDisplay);
+      // console.log(this.roomRecordsDisplay);
     }).catch( err => {
 
     });
@@ -128,14 +128,14 @@ export class RoomGridComponent implements OnInit {
   getCheckIns(): any {
     return this.http.get(`http://localhost:8080/checked-in-out-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
       this.checkInRecords = data;
-      console.log(data);
+      // console.log(data);
       return Promise.resolve('success');
     });
   }
 
   processRoomRecords(data, checkIns): any {
     let ret = [];
-    console.log(data);
+    // console.log(data);
     const d = new Date(this.year, this.month + 1 , 0);
     const lenDays = d.getDate();
     this.dates = [];
@@ -168,12 +168,12 @@ export class RoomGridComponent implements OnInit {
       this.dates.push(item);
     }
     ret.push(this.dates);
-    console.log(lenDays);
+    // console.log(lenDays);
     this.records_length = lenDays + 1;
     let insert:any = {};
     insert.color = 'whitesmoke';
     insert.cols = 1;
-    console.log(data.length);
+    // console.log(data.length);
     for (let i = 0; i < data.length; i++) {
       const arr = [];
       const records = data[i];
@@ -241,7 +241,7 @@ export class RoomGridComponent implements OnInit {
       }
       ret.push(arr);
     }
-    console.log(ret);
+    // console.log(ret);
     return ret;
   }
 

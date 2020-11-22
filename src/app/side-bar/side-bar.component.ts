@@ -12,7 +12,7 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.path = this.platform.pathname.substr(2);
-    console.log(this.path);
+   //  console.log(this.path);
   }
 
 }

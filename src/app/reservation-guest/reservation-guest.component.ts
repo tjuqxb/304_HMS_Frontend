@@ -60,7 +60,7 @@ export class ReservationGuestComponent implements OnInit {
       date.outDate = this.formatDate(this.form.get('outDate').value);
       let recordData = [];
       this.guests.forEach(ele => {
-        //console.log(ele.exist);
+        // console.log(ele.exist);
         if(ele.exist) {
           const singleData = ele.submitRecord();
           if (singleData) {
@@ -73,11 +73,11 @@ export class ReservationGuestComponent implements OnInit {
       ret.inHouseGuests = recordData;
       ret.date = date;
       this.reqBody = ret;
-      console.log(ret);
+      // console.log(ret);
       if (this.getMin) {
         this.http.post('http://localhost:8080/guest/query_cheap_rooms', ret).toPromise().then((data: any) => {
           // this.service.tData = data;
-          console.log(data);
+          // console.log(data);
           this.roomTable.setData(data);
           this.displayRooms(true);
         }).catch(err => {
@@ -86,7 +86,7 @@ export class ReservationGuestComponent implements OnInit {
       } else {
         this.http.post('http://localhost:8080/guest/query_rooms', ret).toPromise().then((data: any) => {
           // this.service.tData = data;
-          console.log(data);
+          // console.log(data);
           this.roomTable.setData(data);
           this.displayRooms(true);
         }).catch((err) => {
@@ -133,7 +133,7 @@ export class ReservationGuestComponent implements OnInit {
   public formatDate(date: any):string {
       let d = new Date(date);
       let month = '' + (d.getMonth() + 1);
-      console.log(d.getMonth());
+      // console.log(d.getMonth());
       let day = '' + d.getDate();
       let year = d.getFullYear();
       if (month.length < 2) {

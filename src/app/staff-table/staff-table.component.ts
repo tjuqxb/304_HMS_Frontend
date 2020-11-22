@@ -40,7 +40,7 @@ export class StaffTableComponent implements OnInit {
   public formatDate(date: any):string {
     let d = new Date(date);
     let month = '' + (d.getMonth() + 1);
-    console.log(d.getMonth());
+    // console.log(d.getMonth());
     let day = '' + d.getDate();
     let year = d.getFullYear();
     if (month.length < 2) {
