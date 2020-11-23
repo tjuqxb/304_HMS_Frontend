@@ -26,6 +26,7 @@ import { StaffTableComponent } from './staff-table/staff-table.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { RoomTableComponent } from './room-table/room-table.component';
 import { ProjectionTableComponent } from './projection-table/projection-table.component';
+import { GroupCountTableComponent } from './group-count-table/group-count-table.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ProjectionTableComponent } from './projection-table/projection-table.co
     StaffTableComponent,
     SideBarComponent,
     RoomTableComponent,
-    ProjectionTableComponent
+    ProjectionTableComponent,
+    GroupCountTableComponent
   ],
   imports: [
     BrowserModule,
