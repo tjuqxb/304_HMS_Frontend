@@ -75,7 +75,9 @@ export class RoomGridComponent implements OnInit {
   }
 
   checkIn(obj): void {
+    console.log(obj);
     this.http.post('http://localhost:8080/checked-in-out-records/check-in', obj).toPromise().then( data => {
+
       this.getReservations();
     }).catch(err => {
 
@@ -128,7 +130,7 @@ export class RoomGridComponent implements OnInit {
   getCheckIns(): any {
     return this.http.get(`http://localhost:8080/checked-in-out-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
       this.checkInRecords = data;
-      // console.log(data);
+      console.log(data);
       return Promise.resolve('success');
     });
   }
