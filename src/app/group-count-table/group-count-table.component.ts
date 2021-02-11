@@ -22,7 +22,7 @@ export class GroupCountTableComponent implements OnInit {
   }
 
   submitToGetGuests(): void {
-    this.http.get(`http://localhost:8080/guest/reservations_greater_count/${this.form.get('count').value}`).toPromise().then( data => {
+    this.http.get(`https://obscure-spire-66915.herokuapp.com/guest/reservations_greater_count/${this.form.get('count').value}`).toPromise().then( data => {
       this.sTable.setData(data);
       this.sTable.setExist(true);
     })

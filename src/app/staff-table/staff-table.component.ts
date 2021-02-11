@@ -29,7 +29,7 @@ export class StaffTableComponent implements OnInit {
     let date = {date1: {}, date2: {}};
     date.date1 = this.formatDate(this.form.get('inDate').value);
     date.date2 = this.formatDate(this.form.get('outDate').value);
-    this.http.post('http://localhost:8080/hotel_staff/find_eligible_staff', date).toPromise().then(data => {
+    this.http.post('https://obscure-spire-66915.herokuapp.com/hotel_staff/find_eligible_staff', date).toPromise().then(data => {
       this.sTable.setExist(true);
       this.sTable.setData(data);
     }).catch(err => {

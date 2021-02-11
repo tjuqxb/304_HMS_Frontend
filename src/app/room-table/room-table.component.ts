@@ -24,7 +24,7 @@ export class RoomTableComponent implements OnInit {
   }
 
   public submitToGetRooms(): void {
-    this.http.get(`http://localhost:8080/rooms/room-records/price/${this.options[this.priceVal.value]}`).toPromise().then((data) => {
+    this.http.get(`https://obscure-spire-66915.herokuapp.com/rooms/room-records/price/${this.options[this.priceVal.value]}`).toPromise().then((data) => {
       this.sTable.setData(data);
       this.sTable.setExist(true);
     });

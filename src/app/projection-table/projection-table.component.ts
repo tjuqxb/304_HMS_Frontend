@@ -25,7 +25,7 @@ export class ProjectionTableComponent implements OnInit {
         arr.push(this.options[i]);
       }
     }
-    this.http.post('http://localhost:8080/reservations/projection', arr).toPromise().then(data => {
+    this.http.post(' https://obscure-spire-66915.herokuapp.com/reservations/projection', arr).toPromise().then(data => {
       this.sTable.setData(data);
       this.sTable.setExist(true);
     }).catch(err => {

@@ -31,6 +31,10 @@ export class RoomGridComponent implements OnInit {
     this.getReceptionists();
   }
 
+  update(): void {
+    this.getReservations();
+  }
+
   openDialogA(item, i, roomIndex) {
     const dialogRef = this.dialog.open(DialogAComponent, {
        data: {item, innerIndex: i, year: this.year, month: this.month + 1, receptionists: this.receptionsts,
@@ -59,7 +63,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   clearCheckInOut(id) {
-    this.http.delete(`http://localhost:8080/checked-in-out-records/del-check-in-and-out/${id}`).toPromise().then( data => {
+    this.http.delete(`https://obscure-spire-66915.herokuapp.com/checked-in-out-records/del-check-in-and-out/${id}`).toPromise().then( data => {
       this.getReservations();
     }).catch(err => {
 
@@ -67,7 +71,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   deleteCheckOut(obj): void {
-    this.http.post('http://localhost:8080/checked-in-out-records/del-check-out', obj).toPromise().then( data => {
+    this.http.post('https://obscure-spire-66915.herokuapp.com/checked-in-out-records/del-check-out', obj).toPromise().then( data => {
       this.getReservations();
     }).catch(err => {
 
@@ -76,7 +80,7 @@ export class RoomGridComponent implements OnInit {
 
   checkIn(obj): void {
     console.log(obj);
-    this.http.post('http://localhost:8080/checked-in-out-records/check-in', obj).toPromise().then( data => {
+    this.http.post('https://obscure-spire-66915.herokuapp.com/checked-in-out-records/check-in', obj).toPromise().then( data => {
 
       this.getReservations();
     }).catch(err => {
@@ -85,7 +89,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   checkOut(obj): void {
-    this.http.post('http://localhost:8080/checked-in-out-records/check-out', obj).toPromise().then( data => {
+    this.http.post('https://obscure-spire-66915.herokuapp.com/checked-in-out-records/check-out', obj).toPromise().then( data => {
       this.getReservations();
     }).catch(err => {
 
@@ -93,7 +97,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   getReceptionists(): void {
-    this.http.get('http://localhost:8080/hotel_staff/receptionists/list').toPromise().then((data: any) => {
+    this.http.get('https://obscure-spire-66915.herokuapp.com/hotel_staff/receptionists/list').toPromise().then((data: any) => {
       this.receptionsts = data;
       // console.log(data);
     }).catch(err => {
@@ -102,7 +106,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   getRooms(): void {
-    this.http.get('http://localhost:8080/rooms/all').toPromise().then((data: any) => {
+    this.http.get('https://obscure-spire-66915.herokuapp.com/rooms/all').toPromise().then((data: any) => {
       this.rooms = data;
       this.keyNames = Object.keys(this.rooms[0]);
     }).catch(err => {
@@ -111,7 +115,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   getReservations(): void {
-    this.http.get(`http://localhost:8080/rooms/room-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
+    this.http.get(`https://obscure-spire-66915.herokuapp.com/rooms/room-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
       // console.log(this.year);
       // console.log(this.month + 1);
       this.roomRecords = data;
@@ -128,7 +132,7 @@ export class RoomGridComponent implements OnInit {
   }
 
   getCheckIns(): any {
-    return this.http.get(`http://localhost:8080/checked-in-out-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
+    return this.http.get(`https://obscure-spire-66915.herokuapp.com/checked-in-out-records/${this.year}/${this.month + 1}`).toPromise().then((data: any) => {
       this.checkInRecords = data;
       //console.log(data);
       return Promise.resolve('success');

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./delete-table.component.css']
 })
 export class DeleteTableComponent implements OnInit {
+  @Output() fromChild = new EventEmitter<any>();
 
   cnames = [];
   data = [];
@@ -29,8 +30,9 @@ export class DeleteTableComponent implements OnInit {
   }
 
   cancelReservation(i, rid): void {
-    this.data.splice(i,1);
-    this.http.delete(`http://localhost:8080/guest/reservations/${rid}`).toPromise().then(() => {
+    this.data.splice(i, 1);
+    this.http.delete(` https://obscure-spire-66915.herokuapp.com/guest/reservations/${rid}`).toPromise().then(() => {
+      this.fromChild.emit('cancel');
     }).catch(err => {
     });
   }

@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {TableComponent} from '../table/table.component';
 import {DeleteTableComponent} from '../delete-table/delete-table.component';
+import {RoomGridComponent} from '../room-grid/room-grid.component';
 
 @Component({
   selector: 'app-reservation-guest',
@@ -20,6 +21,9 @@ export class ReservationGuestComponent implements OnInit {
 
   @ViewChild(DeleteTableComponent)
   public reservationRecordTable: DeleteTableComponent;
+
+  @ViewChild(RoomGridComponent, {static: false})
+  public roomGrid: RoomGridComponent;
 
   public form: FormGroup;
   public record: any;
@@ -75,7 +79,7 @@ export class ReservationGuestComponent implements OnInit {
       this.reqBody = ret;
       // console.log(ret);
       if (this.getMin) {
-        this.http.post('http://localhost:8080/guest/query_cheap_rooms', ret).toPromise().then((data: any) => {
+        this.http.post('https://obscure-spire-66915.herokuapp.com/guest/query_cheap_rooms', ret).toPromise().then((data: any) => {
           // this.service.tData = data;
           // console.log(data);
           this.roomTable.setData(data);
@@ -84,11 +88,12 @@ export class ReservationGuestComponent implements OnInit {
 
         })
       } else {
-        this.http.post('http://localhost:8080/guest/query_rooms', ret).toPromise().then((data: any) => {
+        this.http.post('https://obscure-spire-66915.herokuapp.com/guest/query_rooms', ret).toPromise().then((data: any) => {
           // this.service.tData = data;
           // console.log(data);
           this.roomTable.setData(data);
           this.displayRooms(true);
+
         }).catch((err) => {
 
         });
@@ -108,19 +113,24 @@ export class ReservationGuestComponent implements OnInit {
 
   reserveRoom(): any {
     this.reqBody.rm_number = this.roomTable.data[this.roomTable.chosen].room_number;
-    this.http.post('http://localhost:8080/guest/reserve_room', this.reqBody).toPromise().then((data: any) => {
+    this.http.post('https://obscure-spire-66915.herokuapp.com/guest/reserve_room', this.reqBody).toPromise().then((data: any) => {
       // this.service.tData = data;
       this.displayRooms(false);
       this.reservationRecordTable.setData(data);
+      this.roomGrid.update();
     }).catch((err) => {
 
     });
   }
 
+  fromChild(event): void {
+    this.roomGrid.update();
+  }
+
   displayReserveRecords(): void {
     this.record.credit_card = this.form.get('creditCard').value;
     this.record.photo_identity = this.form.get('photoID').value;
-    this.http.get(`http://localhost:8080/guest/reservations/${this.record.photo_identity}/${this.record.credit_card}`, this.record).toPromise().then((data: any) => {
+    this.http.get(`https://obscure-spire-66915.herokuapp.com/guest/reservations/${this.record.photo_identity}/${this.record.credit_card}`, this.record).toPromise().then((data: any) => {
       // this.service.tData = data;
       this.displayRooms(false);
       this.reservationRecordTable.setData(data);

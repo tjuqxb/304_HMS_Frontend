@@ -58,7 +58,7 @@ export class DialogAComponent implements OnInit {
   }
 
   getBill(): void {
-      this.http.get(`http://localhost:8080/rooms/room-records-in-checkout/${this.data.item.checkIn.ck_id}`).toPromise().then(data => {
+      this.http.get(` https://obscure-spire-66915.herokuapp.com/rooms/room-records-in-checkout/${this.data.item.checkIn.ck_id}`).toPromise().then(data => {
         this.priceTable.setData(data);
         this.totalPrice = this.getTotalPrice(data);
         this.sumExist = true;
